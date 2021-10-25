@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
+import ServicioCustomers from './components/ServicioCustomers/ServicioCustomer';
+import BuscadorCustomer from './components/BuscadorCustomer/BuscadorCustomer';
+import BuscadorCoches from './components/BuscadorCoches/BuscadorCoches';
+import DepartamentosEmpleados from './components/DepartamentosEmpleados/DepartamentosEmpleados';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <div className="App">
+      <DepartamentosEmpleados />
+    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );
