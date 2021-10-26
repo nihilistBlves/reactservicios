@@ -7,11 +7,13 @@ import ServicioCustomers from './components/ServicioCustomers/ServicioCustomer';
 import BuscadorCustomer from './components/BuscadorCustomer/BuscadorCustomer';
 import BuscadorCoches from './components/BuscadorCoches/BuscadorCoches';
 import DepartamentosEmpleados from './components/DepartamentosEmpleados/DepartamentosEmpleados';
+import Router from './components/Router'
+import EmpleadosRouter from './components/RutasEmpleadosParametros/EmpleadosRouter';
 
 ReactDOM.render(
   <React.StrictMode>
     <div className="App">
-      <DepartamentosEmpleados />
+      <App/>
     </div>
   </React.StrictMode>,
   document.getElementById('root')

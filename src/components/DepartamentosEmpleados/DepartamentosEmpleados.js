@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Global from '../../Global';
 import axios from 'axios';
+import Empleados from './Empleados';
 
 export default class DepartamentosEmpleados extends Component {
 
@@ -8,7 +9,6 @@ export default class DepartamentosEmpleados extends Component {
 
     state = {
         departamentos: [],
-        empleados: [],
         status: false
     }
 
@@ -17,19 +17,17 @@ export default class DepartamentosEmpleados extends Component {
         axios.get(Global.urlDepartamentos + request).then(response => {
             this.setState({
                 departamentos: response.data,
-                status: true
+                status: true,
+                idDepartamento: 0
             });
         });
     }
 
     buscarEmpleados = (e) => {
         e.preventDefault();
-        var numDepartamento = this.selectDepartamentos.current.value;
-        var request = "/api/Empleados/EmpleadosDepartamento/" + numDepartamento;
-        axios.get(Global.urlEmpleados + request).then(response => {
-            this.setState({
-                empleados: response.data,
-            });
+        var idDepartamento = this.selectDepartamentos.current.value;
+        this.setState({
+            idDepartamento: idDepartamento
         });
     }
 
@@ -53,30 +51,9 @@ export default class DepartamentosEmpleados extends Component {
                     <button>Mostrar empleados</button>
                 </form>
                 <hr/>
-                {this.state.empleados.length > 0 && (
-                <table border="2">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Apellido</th>
-                            <th>Oficio</th>
-                            <th>Salario</th>
-                            <th>Departamento</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.empleados.map((empleado, index) => {
-                            return(<tr key={index}>
-                                <td>{empleado.idEmpleado}</td>
-                                <td>{empleado.apellido}</td>
-                                <td>{empleado.oficio}</td>
-                                <td>{empleado.salario}</td>
-                                <td>{empleado.departamento}</td>
-                            </tr>);
-                        })}
-                    </tbody>
-                </table>
-                )}
+                {this.state.idDepartamento != 0 &&
+                <Empleados idDepartamento={this.state.idDepartamento}/>}
+                
             </div>
         )
     }
