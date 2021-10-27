@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import Global from '../../Global';
+import {Redirect, NavLink} from 'react-router-dom';
 
 export default class InsertarDepartamento extends Component {
 
@@ -9,8 +10,6 @@ export default class InsertarDepartamento extends Component {
     cajaLoc = React.createRef();
 
     state = {
-        mensaje: "",
-        tipo: "red",
         status: false
     }
 
@@ -28,8 +27,6 @@ export default class InsertarDepartamento extends Component {
         var url = Global.urlCrudDepartamentos + request;
         axios.post(url, dep).then(response => {
             this.setState({
-                mensaje: "Insertado correctamente",
-                tipo: "green",
                 status: true
             });
         });
@@ -37,23 +34,26 @@ export default class InsertarDepartamento extends Component {
     }
 
     render() {
+        if (this.state.status) {
+            return(<Redirect to="/"/>);
+        }
         return (
-            <div>
-                <h1>Insertar departamento</h1>
-                {this.state.status &&
-                    <h2 style={{color:this.state.tipo}}>{this.state.mensaje}</h2>
-                }
-                <form onSubmit={this.insertarDepartamento}>
-                    <div className="mb-3">
-                        <label className="form-label">Número</label>
-                        <input type="number" class="form-control" ref={this.cajaNumero} placeholder="Introduzca un número"/>
-                        <label className="form-label">Nombre</label>
-                        <input type="text" class="form-control" ref={this.cajaNombre} placeholder="Introduzca un nombre"/>
-                        <label className="form-label">Localidad</label>
-                        <input type="text" className="form-control" ref={this.cajaLoc} placeholder="Introduzca una localidad"/>
-                    </div>
-                    <button type="submit" className="btn btn-primary">Insertar departamento</button>
-                </form>
+            <div className="row m-3">
+                <div className="col">
+                    <h1>Insertar departamento</h1>
+                    <form onSubmit={this.insertarDepartamento}>
+                        <div className="mb-3">
+                            <label className="form-label">Número</label>
+                            <input type="number" class="form-control" ref={this.cajaNumero} placeholder="Introduzca un número"/>
+                            <label className="form-label">Nombre</label>
+                            <input type="text" class="form-control" ref={this.cajaNombre} placeholder="Introduzca un nombre"/>
+                            <label className="form-label">Localidad</label>
+                            <input type="text" className="form-control" ref={this.cajaLoc} placeholder="Introduzca una localidad"/>
+                        </div>
+                        <button type="submit" className="btn btn-success">Insertar departamento</button>
+                        <NavLink className="btn btn-secondary m-3" to="/">Volver</NavLink>
+                    </form>
+                </div>
             </div>
         )
     }

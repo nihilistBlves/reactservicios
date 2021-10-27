@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Global from '../../Global'
+import { NavLink } from 'react-router-dom'
 
 export default class TablaDepartamentos extends Component {
 
@@ -20,6 +21,14 @@ export default class TablaDepartamentos extends Component {
         });
     }
 
+    eliminarDepartamento = (numero) => {
+        var request = "/webresources/departamentos/delete/" + numero;
+        var url = Global.urlCrudDepartamentos + request;
+        axios.delete(url).then(response =>  {
+            this.componentDidMount();
+        });
+    }
+
     componentDidMount = () => {
         this.cargarDepartamentos();
     }
@@ -27,7 +36,7 @@ export default class TablaDepartamentos extends Component {
     render() {
         if (this.state.status) {
             return (
-                <div className="row">
+                <div className="row m-3">
                     <div className="col">
                         <h1 className="h1">Tabla departamentos</h1>
                         <table className="table table-striped">
@@ -45,6 +54,21 @@ export default class TablaDepartamentos extends Component {
                                             <td>{departamento.numero}</td>
                                             <td>{departamento.nombre}</td>
                                             <td>{departamento.localidad}</td>
+                                            <td>
+                                                <NavLink className="btn btn-primary" to={"/departamentos/" + departamento.numero}>
+                                                    Detalles
+                                                </NavLink>
+                                            </td>
+                                            <td>
+                                                <NavLink className="btn btn-success" to={"/departamentos/" + departamento.numero + "/editar"}>
+                                                    Editar
+                                                </NavLink>
+                                            </td>
+                                            <td>
+                                                <NavLink className="btn btn-danger" to={"/departamentos/" + departamento.numero + "/eliminar"}>
+                                                    Eliminar
+                                                </NavLink>
+                                            </td>
                                         </tr>
                                     );
                                 })}
